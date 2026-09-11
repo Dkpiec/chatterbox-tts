@@ -50,6 +50,19 @@ def _save_clone_map(m):
         print("clone map save failed:", e, flush=True)
 
 
+def get_device():
+    env_dev = os.environ.get("DEVICE", "").lower()
+    if env_dev:
+        return env_dev
+    try:
+        import torch
+        if torch.cuda.is_available():
+            return "cuda"
+    except Exception:
+        pass
+    return "cpu"
+
+
 def get_model(model_type="en"):
     """Caller must hold _lock. Loads requested model, dropping the other if resident.
     Re-applies any persisted voice clone for this model type."""
@@ -60,15 +73,16 @@ def get_model(model_type="en"):
             del _models[other]
             import gc
             gc.collect()
-        print(f"loading '{model_type}' model...", flush=True)
+        device = get_device()
+        print(f"loading '{model_type}' model on device '{device}'...", flush=True)
         t0 = time.time()
         if model_type == "en":
             from chatterbox.tts import ChatterboxTTS
-            _models["en"] = ChatterboxTTS.from_pretrained(device="cpu")
+            _models["en"] = ChatterboxTTS.from_pretrained(device=device)
         else:
             from chatterbox.mtl_tts import ChatterboxMultilingualTTS
-            _models["mtl"] = ChatterboxMultilingualTTS.from_pretrained(device="cpu")
-        print(f"'{model_type}' model loaded in {time.time()-t0:.1f}s", flush=True)
+            _models["mtl"] = ChatterboxMultilingualTTS.from_pretrained(device=device)
+        print(f"'{model_type}' model loaded on {device} in {time.time()-t0:.1f}s", flush=True)
         # auto re-apply persisted clone for this model type
         cm = _load_clone_map().get(model_type)
         if cm and os.path.exists(cm.get("audio_wav", "")):
