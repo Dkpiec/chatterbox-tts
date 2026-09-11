@@ -46,7 +46,7 @@ python client.py "नमस्ते, यह क्लोन टेस्ट ह
 | Platform | Free tier verdict |
 |---|---|
 | Render | ❌ free = 512 MB RAM — cannot load the model. Paid `standard` (≥2 CPU/4GB) marginal; recommend 8 GB instance. |
-| **Hugging Face Spaces** | ✅ best free option — free CPU large (16 GB RAM) Space, supports Docker. |
+| **Hugging Face Spaces** | ❌ as of 2026-09, Docker & Gradio Spaces on free `cpu-basic` require a **PRO subscription** (API returns 402; only Static Spaces are free). Cannot host this server for free. |
 | **Kaggle** | ✅ 30 free GPU/CPU hrs/week — 16 GB RAM CPU instance. |
 | Google Colab | ⚠️ free CPU runtime ~13 GB RAM works, but sessions die after 12 h / inactivity. |
 | Your own Coolify | ✅ how this was originally run — 6 GB memory cap, models on persistent mount. |
