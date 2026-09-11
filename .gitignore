@@ -1,0 +1,7 @@
+venv/
+hf_cache/
+__pycache__/
+*.boot.log
+.installed
+current_clone.json
+*.pyc

@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: chatterbox-tts
+    runtime: docker
+    plan: standard  # NOTE: needs ~6GB RAM + ~8GB disk for models.
+                    # Render free tier (512MB RAM) CANNOT run this.
+                    # Use a paid instance or a platform with a free GPU tier.
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8001
+      - key: IDLE_UNLOAD_S
+        value: 600
+    disk:
+      name: hf-model-cache
+      mountPath: /data
+      sizeGB: 20
