@@ -33,6 +33,11 @@ if not getattr(perth, "PerthImplicitWatermarker", None):
         def apply(self, *args, **kwargs): pass
         def get_seed(self, *args, **kwargs): return 0
     perth.PerthImplicitWatermarker = getattr(perth, "ImplicitWatermarker", DummyWatermarker)
+
+PORT = int(os.environ.get("PORT", 8001))
+IDLE_UNLOAD_S = int(os.environ.get("IDLE_UNLOAD_S", 600))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CLONE_MAP_PATH = os.environ.get("CLONE_MAP_PATH", os.path.join(BASE_DIR, "current_clone.json"))
 _lock = threading.Lock()          # serializes model swap + synthesis
 _models = {}                      # "en" -> ChatterboxTTS, "mtl" -> ChatterboxMultilingualTTS
 _last_used = 0.0
