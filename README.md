@@ -4,6 +4,10 @@ CPU-only TTS HTTP server with **voice cloning** (English via ChatterboxTTS, Hind
 
 This repo packages the working production setup for the **Dharmendra voice clone** (EN + Hindi reference wavs included).
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Dkpiec/chatterbox-tts/blob/main/chatterbox_tts_colab.ipynb)
+
+**No server of your own?** Click the badge above — the notebook installs everything on a free Colab CPU runtime, applies the Dharmendra clones automatically, and exposes a public HTTPS tunnel. First run ~20 min (model downloads), ~5 min afterwards with the Drive cache. Sessions die after ~90 min idle.
+
 ## Endpoints
 
 | Method | Path | Body | Returns |
