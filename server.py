@@ -76,6 +76,12 @@ def get_model(model_type="en"):
         device = get_device()
         print(f"loading '{model_type}' model on device '{device}'...", flush=True)
         t0 = time.time()
+        try:
+            import perth
+            if not hasattr(perth, "PerthImplicitWatermarker") and hasattr(perth, "ImplicitWatermarker"):
+                perth.PerthImplicitWatermarker = perth.ImplicitWatermarker
+        except Exception:
+            pass
         if model_type == "en":
             from chatterbox.tts import ChatterboxTTS
             _models["en"] = ChatterboxTTS.from_pretrained(device=device)
